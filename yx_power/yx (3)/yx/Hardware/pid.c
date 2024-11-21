@@ -29,7 +29,9 @@ PID pid_dipan3508[4] = {
 };
 extern PID pid_dipan3508[4];
 
- 
+PID pid_bodan3508={5,0.15,0,0x1000,0x5000,0,0,0,0,0,0};
+PID pid_yaw6020={5, 0.01, 0,0x3000, 0x5000, 0, 0,0,0};
+
 /**
   * @brief  pid_output此函数用于输出一个pid输出
   * @param  kp,ki,kd,maxI,maxO,分别指pid算法参数，target为你想达到的目标值，feedback为当前目标的值（反馈值）
