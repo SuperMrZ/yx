@@ -170,12 +170,17 @@
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>motor_receive_bodan3508,0x0A</ItemText>
+          <ItemText>motor_receive_bodan3508,0x10</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
           <ItemText>yaokong_can_send_data</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>motor_receive_yaw6020</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

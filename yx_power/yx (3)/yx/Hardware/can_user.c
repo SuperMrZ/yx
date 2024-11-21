@@ -115,7 +115,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     // 在这里解析并存储接收到的数据
 
 
-	if(rx_header.StdId==0x200)
+	if(rx_header.StdId==0x124)
 	{
 		RC_Ctl.rc.ch0=(rx_data[0] << 8) |rx_data[1];
 		RC_Ctl.rc.ch1=(rx_data[2] << 8) |rx_data[3];

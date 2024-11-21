@@ -73,11 +73,22 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     // 在这里解析并存储接收到的数据
 	
 
+	if(rx_header.StdId == 0x207)
+	{
 			motor_receive_bodan3508.motor_id=rx_header.StdId;
 		  motor_receive_bodan3508.angle =(rx_data[0] << 8) |rx_data[1];// 示例：假设第一个字节和第二个字节为电机角度数据
 		  motor_receive_bodan3508.speed= (rx_data[2] << 8) |rx_data[3];  // 示例：假设第三个字节为电机转速数据
 		  motor_receive_bodan3508.currunt = (rx_data[4] << 8) |rx_data[5];
 		
+	}
+
+	if(rx_header.StdId == 0x20B)
+	{
+			motor_receive_yaw6020.motor_id=rx_header.StdId;
+		  motor_receive_yaw6020.angle =(rx_data[0] << 8) |rx_data[1];// 示例：假设第一个字节和第二个字节为电机角度数据
+		  motor_receive_yaw6020.speed= (rx_data[2] << 8) |rx_data[3];  // 示例：假设第三个字节为电机转速数据
+		  motor_receive_yaw6020.currunt = (rx_data[4] << 8) |rx_data[5];
+	}
 		
 
 
@@ -119,7 +130,7 @@ static uint8_t              yaokong_can_send_data[8];//要发送的数据数组
 void yaokong_send_MSG(RC_Ctl_t RC_Ctl)
 {
     uint32_t send_mail_box;
-    yaokong_tx_message.StdId = 0x200;//查阅C620手册，ID为1-4时发送标识为0x200
+    yaokong_tx_message.StdId = 0x124;//查阅C620手册，ID为1-4时发送标识为0x200
     yaokong_tx_message.IDE = CAN_ID_STD;
     yaokong_tx_message.RTR = CAN_RTR_DATA;
     yaokong_tx_message.DLC = 0x08;
