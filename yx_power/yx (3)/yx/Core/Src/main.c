@@ -141,8 +141,8 @@ int main(void)
 //		  CAN_cmd_speed_3508motor(dipan_speedtarget,motor_recieve_dipan3508);
 //	  }
 		
-	  //dipan_speed_jiesuan(RC_Ctl);
-	 // CAN_cmd_speed_3508motor(dipan_speedtarget,motor_recieve_dipan3508);
+	  dipan_speed_jiesuan(RC_Ctl);
+	  CAN_cmd_speed_3508motor(dipan_speedtarget,motor_recieve_dipan3508);
 	 HAL_Delay(2);
   }
   /* USER CODE END 3 */

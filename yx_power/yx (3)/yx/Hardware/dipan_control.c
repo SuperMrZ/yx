@@ -26,10 +26,10 @@ void dipan_speed_jiesuan(RC_Ctl_t RC_Ctl)
 //	dipan_speedtarget[3] = 	 power_scale*power_control*(-a1*-dipan_y_speed + a2*dipan_x_speed +dipan_z_speed);//左后
 	
 		
-	dipan_speedtarget[0] = 	 power_control*(a1*-dipan_y_speed - a2*dipan_x_speed  +dipan_z_speed);//右前
-	dipan_speedtarget[1] = 	 power_control*(a1*dipan_y_speed  - a2*dipan_x_speed  +dipan_z_speed);//左前
-	dipan_speedtarget[2] = 	 power_control*(-a1*dipan_y_speed  + a2*dipan_x_speed +dipan_z_speed);//右后
-	dipan_speedtarget[3] = 	 power_control*(-a1*-dipan_y_speed + a2*dipan_x_speed +dipan_z_speed);//左后
+	dipan_speedtarget[0] = 	 power_control*(a1*-dipan_y_speed - a2*dipan_x_speed  );//右前
+	dipan_speedtarget[1] = 	 power_control*(a1*dipan_y_speed  - a2*dipan_x_speed  );//左前
+	dipan_speedtarget[2] = 	 power_control*(-a1*dipan_y_speed  + a2*dipan_x_speed );//右后
+	dipan_speedtarget[3] = 	 power_control*(-a1*-dipan_y_speed + a2*dipan_x_speed );//左后
 	
 	
 

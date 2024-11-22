@@ -138,11 +138,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		dipan_speed_jiesuan(RC_Ctl);
-		yaokong_send_MSG(RC_Ctl);
-		HAL_Delay(1);
-		yaokong_send_MSG2(RC_Ctl);
-		HAL_Delay(1);
+//		dipan_speed_jiesuan(RC_Ctl);
+//		yaokong_send_MSG(RC_Ctl);
+//		HAL_Delay(1);
+//		yaokong_send_MSG2(RC_Ctl);
+//		HAL_Delay(1);
 
 
 		CAN_cma_angle_yaw6020(yuntai_locationtarget[0],motor_receive_yaw6020);
