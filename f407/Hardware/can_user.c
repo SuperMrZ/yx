@@ -12,7 +12,8 @@ extern motor_recieve motor_receive_yaw6020;
 
 extern damiao_recieve damiao_recieve_pitch;
 extern PID pid_dipan3508[4];
-
+extern  PID pid_bodan3508 ;
+extern PID pid_yaw6020;
 extern RC_Ctl_t RC_Ctl;
 
 
@@ -92,33 +93,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 		
 
 
-}
-
-
-/**
-  * @brief  CAN_cmd_3508motor此函数用于控制云台四个3508电机的输入电流
-  * @param  motor1-4指的是你想指定相应电机的电流输入值，类型为int_16形（后续应该修改）
-  * @retval 无
-  */
-static CAN_TxHeaderTypeDef  ganble_tx_message;//发送数据的数据头
-static uint8_t              gamble_can_send_data[8];//要发送的数据数组
-void CAN_cmd_current_bodan_3508motor(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
-{
-    uint32_t send_mail_box;
-    ganble_tx_message.StdId = 0x1FF;//查阅C620手册，ID为1-4时发送标识为0x200
-    ganble_tx_message.IDE = CAN_ID_STD;
-    ganble_tx_message.RTR = CAN_RTR_DATA;
-    ganble_tx_message.DLC = 0x08;
-    gamble_can_send_data[0] = motor1 >> 8; //id1电机 设置电流值高8位
-    gamble_can_send_data[1] = motor1;      //id1电机 设置电流值低8位
-    gamble_can_send_data[2] = motor2 >> 8; //id2电机 设置电流值高8位
-    gamble_can_send_data[3] = motor2;      //id2电机 设置电流值低8位
-    gamble_can_send_data[4] = motor3 >> 8;
-    gamble_can_send_data[5] = motor3;
-    gamble_can_send_data[6] = motor4 >> 8;
-    gamble_can_send_data[7] = motor4;
- 
-    HAL_CAN_AddTxMessage(&hcan1, &ganble_tx_message, gamble_can_send_data, &send_mail_box);
 }
 
 
@@ -316,8 +290,85 @@ void CAN_cmd_speed_3508motor(int16_t target[4], motor_recieve motor_recieve_info
 
 }
 
+static CAN_TxHeaderTypeDef  bodan_tx_message;//发送数据的数据头
+static uint8_t              bodan_can_send_data[8];//要发送的数据数组
+void CAN_cmd_current_bodan3508(int16_t motor1)
+{
+    uint32_t send_mail_box;
+    bodan_tx_message.StdId = 0x1FF;//查阅C620手册，ID为1-4时发送标识为0x200
+    bodan_tx_message.IDE = CAN_ID_STD;
+    bodan_tx_message.RTR = CAN_RTR_DATA;
+    bodan_tx_message.DLC = 0x08;
+    bodan_can_send_data[4] = motor1 >> 8; //id1电机 设置电流值高8位
+    bodan_can_send_data[5] = motor1;      //id1电机 设置电流值低8位
+
+ 
+    HAL_CAN_AddTxMessage(&hcan1, &bodan_tx_message, bodan_can_send_data, &send_mail_box);
+}
+
+void CAN_cmd_speed_bodan(int16_t target, motor_recieve motor_recieve_info)
+{
 
 
+		int16_t motor_currnt;
+
+    motor_currnt = pid_output(&pid_bodan3508, motor_recieve_info.speed, target);
+    
+
+	//chassis_power_control(motor_recieve_dipan3508, motor_currnt);
+		CAN_cmd_current_bodan3508(motor_currnt);
+
+
+}
+
+static CAN_TxHeaderTypeDef  yaw6020_tx_message;//发送数据的数据头
+static uint8_t              yaw6020_can_send_data[8];//要发送的数据数组
+void CAN_cmd_current_yaw6020(int16_t motor1)
+{
+    uint32_t send_mail_box;
+    yaw6020_tx_message.StdId = 0x2FE;//查阅C620手册，ID为1-4时发送标识为0x200
+    yaw6020_tx_message.IDE = CAN_ID_STD;
+    yaw6020_tx_message.RTR = CAN_RTR_DATA;
+    yaw6020_tx_message.DLC = 0x08;
+    yaw6020_can_send_data[4] = motor1 >> 8; //id1电机 设置电流值高8位
+    yaw6020_can_send_data[5] = motor1;      //id1电机 设置电流值低8位
+
+ 
+    HAL_CAN_AddTxMessage(&hcan1, &yaw6020_tx_message, yaw6020_can_send_data, &send_mail_box);
+}
+
+
+void CAN_cmd_speed_yaw6020(int16_t target, motor_recieve motor_recieve_info)
+{
+
+
+		int16_t motor_currnt;
+
+    motor_currnt = pid_output(&pid_bodan3508, motor_recieve_info.speed, target);
+    
+
+	//chassis_power_control(motor_recieve_dipan3508, motor_currnt);
+		CAN_cmd_current_yaw6020(motor_currnt);
+
+}
+
+
+void CAN_cma_angle_yaw6020(int16_t target, motor_recieve motor_recieve_info)
+{
+	int16_t motor_speed;
+	int16_t cur;
+	cur=motor_recieve_info.angle;
+		    if(target-cur > 4096 )
+		{
+			cur += 8192;
+		}
+		else if(target-cur < -4096 )
+		{
+			cur =cur -8192;
+		}
+		motor_speed = pid_output( &pid_yaw6020, cur, target);
+		CAN_cmd_speed_yaw6020(motor_speed,motor_recieve_info);
+}
 
 
 

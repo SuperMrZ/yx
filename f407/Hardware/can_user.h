@@ -23,6 +23,15 @@ void CAN_cmd_speed_3508motor(int16_t target[4], motor_recieve motor_recieve_info
 void yaokong_send_MSG(RC_Ctl_t RC_Ctl);
 void yaokong_send_MSG2(RC_Ctl_t RC_Ctl);
 
-void CAN_cmd_current_bodan_3508motor(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
+
+void CAN_cmd_current_bodan3508(int16_t motor1);
+void CAN_cmd_speed_bodan(int16_t target, motor_recieve motor_recieve_info);
+
+
+
+void CAN_cmd_current_yaw6020(int16_t motor1);
+void CAN_cmd_speed_yaw6020(int16_t target, motor_recieve motor_recieve_info);
+void CAN_cma_angle_yaw6020(int16_t target, motor_recieve motor_recieve_info);
+
 
 #endif

@@ -138,15 +138,20 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		dipan_speed_jiesuan(RC_Ctl);
-		yaokong_send_MSG(RC_Ctl);
-		yaokong_send_MSG2(RC_Ctl);
+//		yaokong_send_MSG(RC_Ctl);
+//		HAL_Delay(1);
+//		yaokong_send_MSG2(RC_Ctl);
+//		HAL_Delay(1);
 
+		CAN_cmd_current_yaw6020(3000);
+		HAL_Delay(1);
 		
 		ctrl_damiao_motor(0x01,yuntai_locationtarget[1],0,10,0.3,0);
 		CAN_cmd_speed_3508motor(fashe_speed,motor_recieve_yuntai3508);
 		
+		CAN_cmd_speed_bodan(3000,motor_receive_bodan3508);
 		
-		HAL_Delay(3);
+		HAL_Delay(2);
   }
   /* USER CODE END 3 */
 }

@@ -1,6 +1,6 @@
 # ifndef _PID_H
 #define  _PID_H
-
+#include "stm32f4xx.h"  
 
 typedef struct
 {
@@ -21,10 +21,8 @@ int16_t output;
 
 
 extern PID pid_dipan3508[4];
-extern PID pid_yuntai6020[2];
-extern PID pid_yuntai6020_angle[2];
-extern PID pid_yuntai3508[3];
-extern PID pid_yuntai3508_angle[3];
+extern PID pid_yaw6020;
+extern PID pid_bodan3508 ;
 
 int16_t pid_output(PID *pid, int16_t feedback, int16_t target) ;
 
