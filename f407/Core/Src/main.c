@@ -143,7 +143,8 @@ int main(void)
 //		yaokong_send_MSG2(RC_Ctl);
 //		HAL_Delay(1);
 
-		CAN_cmd_current_yaw6020(3000);
+		//CAN_cmd_current_yaw6020(3000);
+		CAN_cma_angle_yaw6020(7000,motor_receive_yaw6020);
 		HAL_Delay(1);
 		
 		ctrl_damiao_motor(0x01,yuntai_locationtarget[1],0,10,0.3,0);
