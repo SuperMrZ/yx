@@ -61,6 +61,7 @@ extern int16_t dipan_speedtarget[4];
 extern float yuntai_locationtarget[2];
 
 int16_t fashe_speed[4];
+int16_t bodan_speed;
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -143,14 +144,14 @@ int main(void)
 //		yaokong_send_MSG2(RC_Ctl);
 //		HAL_Delay(1);
 
-		//CAN_cmd_current_yaw6020(3000);
-		CAN_cma_angle_yaw6020(7000,motor_receive_yaw6020);
+
+		CAN_cma_angle_yaw6020(yuntai_locationtarget[0],motor_receive_yaw6020);
 		HAL_Delay(1);
 		
 		ctrl_damiao_motor(0x01,yuntai_locationtarget[1],0,10,0.3,0);
 		CAN_cmd_speed_3508motor(fashe_speed,motor_recieve_yuntai3508);
 		
-		CAN_cmd_speed_bodan(3000,motor_receive_bodan3508);
+		CAN_cmd_speed_bodan(bodan_speed,motor_receive_bodan3508);
 		
 		HAL_Delay(2);
   }

@@ -175,7 +175,12 @@
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>motor_receive_yaw6020</ItemText>
+          <ItemText>motor_receive_yaw6020,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>yuntai_locationtarget</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

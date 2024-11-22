@@ -14,6 +14,8 @@ extern uint8_t sbus_rx_buffer[18];//声明遥控器接收缓存数组
 extern motor_recieve motor_recieve_yuntai3508[3];
 
 extern int16_t fashe_speed[4];
+extern int16_t bodan_speed;
+
 
 extern int8_t yaokongjishi; 
 
@@ -56,28 +58,21 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		
 		if(RC_Ctl.rc.s1 ==1)
 		{
-			//开启摩擦轮
-			fashe_speed[0]=500;
-			fashe_speed[1]=500;
-			fashe_speed[2]=500;
+			bodan_speed=3000;
 		}
+
 		
 		if(RC_Ctl.rc.s1 ==3)
 		{
-	
-			CAN_cmd_current_3508motor(0,0,0,0);
+				//开启摩擦轮
+			fashe_speed[0]=500;
+			fashe_speed[1]=500;
+			fashe_speed[2]=500;
+			bodan_speed=0;			
 			
 		}
 
-		if(RC_Ctl.rc.s1 ==2)
-		{
-			
-			//CAN_cmd_current_3508motor(0,0,0,0);
-			fashe_speed[0]=0;
-			fashe_speed[1]=0;
-			fashe_speed[2]=0;
-		}		
-		
+
 				
 				
 				HAL_UARTEx_ReceiveToIdle_DMA(&huart3,sbus_rx_buffer,18);	

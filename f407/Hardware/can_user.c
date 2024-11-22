@@ -344,7 +344,7 @@ void CAN_cmd_speed_yaw6020(int16_t target, motor_recieve motor_recieve_info)
 
 		int16_t motor_currnt;
 
-    motor_currnt = pid_output(&pid_bodan3508, motor_recieve_info.speed, target);
+    motor_currnt = pid_output(&pid_yaw6020, motor_recieve_info.speed, target);
     
 
 	//chassis_power_control(motor_recieve_dipan3508, motor_currnt);

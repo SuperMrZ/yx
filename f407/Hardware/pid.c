@@ -30,7 +30,8 @@ PID pid_dipan3508[4] = {
 extern PID pid_dipan3508[4];
 
 PID pid_bodan3508={10,0.15,0.15,0x1000,0x5000,0,0,0,0,0,0};
-PID pid_yaw6020={10, 0.01, 0.5,0x3000, 0x5000, 0, 0,0,0};
+PID pid_yaw6020={10, 0.01, 0,0x3000, 0x5000, 0, 0,0,0};
+PID pid_yaw6020_angle={8, 0, 0.3,0x3000, 0x5000, 0, 0,0,0};
  
 /**
   * @brief  pid_output此函数用于输出一个pid输出
