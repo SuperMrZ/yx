@@ -13,7 +13,7 @@ int16_t error_last;
 float pout ;
 int16_t iout;
 float dout;
-int16_t output;
+int32_t output;
 
 } PID;
 
@@ -22,16 +22,16 @@ int16_t output;
 
 //不同电机的pid参数
 PID pid_dipan3508[4] = {
-    {3, 0.01, 0, 0x1000, 0x5000, 0, 0,0,0,0,0},
-    {3, 0.01, 0, 0x1000, 0x5000, 0, 0,0,0,0,0},
-    {3, 0.01, 0, 0x1000, 0x5000, 0, 0,0,0,0,0},
-    {3, 0.01, 0, 0x1000, 0x5000, 0, 0,0,0,0,0}
+    {10, 0.01, 0, 0x3000, 0x3000, 0, 0,0,0,0,0},
+    {10, 0.01, 0, 0x3000, 0x3000, 0, 0,0,0,0,0},
+    {10, 0.01, 0, 0x3000, 0x3000, 0, 0,0,0,0,0},
+    {10, 0.01, 0, 0x3000, 0x3000, 0, 0,0,0,0,0}
 };
 extern PID pid_dipan3508[4];
 
-PID pid_bodan3508={10,0.15,0.15,0x1000,0x5000,0,0,0,0,0,0};
-PID pid_yaw6020={10, 0.01, 0,0x3000, 0x5000, 0, 0,0,0};
-PID pid_yaw6020_angle={8, 0, 0.3,0x3000, 0x5000, 0, 0,0,0};
+PID pid_bodan3508={20,0.15,0.15,0x5000,0x5000,0,0,0,0};
+PID pid_yaw6020={8, 0.15, 0,0x1000, 0x5000, 0, 0,0,0};
+PID pid_yaw6020_angle={20,0.1,5,0x3000, 0x5000, 0, 0,0,0};
  
 /**
   * @brief  pid_output此函数用于输出一个pid输出
@@ -42,7 +42,7 @@ PID pid_yaw6020_angle={8, 0, 0.3,0x3000, 0x5000, 0, 0,0,0};
   
 
 
-int16_t pid_output(PID *pid, int16_t feedback, int16_t target) 
+int32_t pid_output(PID *pid, int16_t feedback, int16_t target) 
 {
     // 更新误差
     pid->error_last = pid->error_now;
@@ -71,7 +71,7 @@ int16_t pid_output(PID *pid, int16_t feedback, int16_t target)
 	pid->dout = dout;
 
     // 计算输出并限制
-    int16_t output = pout - dout + pid->iout;
+    int32_t output = pout - dout + pid->iout;
 //    if (output > pid->maxO) {
 //        output = pid->maxO;
 //    }
@@ -79,7 +79,6 @@ int16_t pid_output(PID *pid, int16_t feedback, int16_t target)
 
     return output;
 }
-
 
 
 

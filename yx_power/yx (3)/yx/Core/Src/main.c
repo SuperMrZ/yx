@@ -43,6 +43,7 @@ motor_recieve motor_recieve_dipan3508[4];
 motor_recieve motor_recieve_dipan6020;
 motor_recieve motor_reciver_bodan3508;
 extern int16_t dipan_speedtarget[4];
+ extern int16_t dipan_speed[4];
 
 RC_Ctl_t RC_Ctl ;
 uint8_t time=0;
@@ -127,22 +128,32 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  if(RC_Ctl.rc.s2==3)
-//	  {
-//		  CAN_cmd_current_3508motor(0,0,0,0);
-//	  }
-//	  else if (RC_Ctl.rc.s2==2)
-//	  {
-//		  CAN_cmd_speed_3508motor(target_stop,motor_recieve_dipan3508);
-//	  }
-//	  else if(RC_Ctl.rc.s2==1)
-//	  {
-//		  dipan_speed_jiesuan(RC_Ctl);
-//		  CAN_cmd_speed_3508motor(dipan_speedtarget,motor_recieve_dipan3508);
-//	  }
+		dipan_speed_jiesuan(RC_Ctl);		
+	  if(RC_Ctl.rc.s2==2)
+	  {
+		  CAN_cmd_current_3508motor(0,0,0,0);
+	  }
+
+				
 		
-	  dipan_speed_jiesuan(RC_Ctl);
-	  CAN_cmd_speed_3508motor(dipan_speedtarget,motor_recieve_dipan3508);
+		
+	  if(RC_Ctl.rc.s2==3)
+		{
+			target[0]=dipan_speed[0];
+			target[1]=dipan_speed[1];
+			target[2]=dipan_speed[2];
+			target[3]=dipan_speed[3];
+			
+			CAN_cmd_speed_3508motor(dipan_speed,motor_recieve_dipan3508);
+		}
+		if(RC_Ctl.rc.s2==1)
+		{
+		CAN_cmd_speed_3508motor(dipan_speed,motor_recieve_dipan3508);
+		}
+		
+
+
+
 	 HAL_Delay(2);
   }
   /* USER CODE END 3 */

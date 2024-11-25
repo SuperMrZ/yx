@@ -165,22 +165,37 @@
         <Ww>
           <count>0</count>
           <WinNumber>2</WinNumber>
-          <ItemText>RC_Ctl,0x10</ItemText>
+          <ItemText>RC_Ctl,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>2</WinNumber>
-          <ItemText>motor_receive_bodan3508,0x10</ItemText>
+          <ItemText>motor_receive_yaw6020,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>2</WinNumber>
-          <ItemText>motor_receive_yaw6020,0x0A</ItemText>
+          <ItemText>motor_receive_bodan3508,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>2</WinNumber>
-          <ItemText>yuntai_locationtarget</ItemText>
+          <ItemText>motor_recieve_yuntai3508,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>motor_currnt</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>pid_dipan3508,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>pid_bodan3508,0x0A</ItemText>
         </Ww>
       </WatchWindow2>
       <Tracepoint>

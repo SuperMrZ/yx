@@ -65,9 +65,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		if(RC_Ctl.rc.s1 ==3)
 		{
 				//¿ªÆôÄ¦²ÁÂÖ
-			fashe_speed[0]=500;
-			fashe_speed[1]=500;
-			fashe_speed[2]=500;
+
 			bodan_speed=0;			
 			
 		}

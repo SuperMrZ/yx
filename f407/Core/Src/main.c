@@ -128,6 +128,7 @@ int main(void)
 	can_filter2_init();
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart3,sbus_rx_buffer,18);
 	__HAL_DMA_DISABLE_IT(huart3.hdmarx ,DMA_IT_HT );  //防止接收到一半就停止，跟上一句一定要配套写
+	int16_t target[4]={-2000,2000,2000,5000};
 	
   /* USER CODE END 2 */
 
@@ -138,20 +139,63 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//		dipan_speed_jiesuan(RC_Ctl);
-//		yaokong_send_MSG(RC_Ctl);
-//		HAL_Delay(1);
-//		yaokong_send_MSG2(RC_Ctl);
-//		HAL_Delay(1);
-
-
-		CAN_cma_angle_yaw6020(yuntai_locationtarget[0],motor_receive_yaw6020);
+		dipan_speed_jiesuan(RC_Ctl);
+		yaokong_send_MSG(RC_Ctl);
+		HAL_Delay(2);
+		yaokong_send_MSG2(RC_Ctl);
 		HAL_Delay(1);
+
+/////////////////////////
 		
+		if(RC_Ctl.rc.s2==1)
+		{
+					//	CAN_cmd_speed_yaw6020(RC_Ctl.rc.ch0-1024,motor_receive_yaw6020);
+			CAN_cma_angle_yaw6020(yuntai_locationtarget[0],motor_receive_yaw6020);
+			HAL_Delay(1);
+		}
+		
+		if(RC_Ctl.rc.s2==3)
+		{
+			//CAN_cmd_speed_yaw6020(RC_Ctl.rc.ch0-1024,motor_receive_yaw6020);
+			CAN_cma_angle_yaw6020(yuntai_locationtarget[0],motor_receive_yaw6020);
+			HAL_Delay(1);
+		}
+		
+		if(RC_Ctl.rc.s2==2)
+		{
+			yuntai_locationtarget[0]=motor_receive_yaw6020.angle;
+			HAL_Delay(1);
+		}
+		
+
+		
+////////////////////////		
+		
+		if(RC_Ctl.rc.s1==3)
+		{
+					CAN_cmd_current_bodan3508(0);
+					//CAN_cmd_speed_3508motor(fashe_speed,motor_recieve_yuntai3508);
+			CAN_cmd_speed_3508motor(target,motor_recieve_yuntai3508);
+		}
+		if(RC_Ctl.rc.s1==1)
+		{
+					CAN_cmd_speed_bodan(bodan_speed,motor_receive_bodan3508);
+				//	CAN_cmd_speed_3508motor(fashe_speed,motor_recieve_yuntai3508);
+			CAN_cmd_speed_3508motor(target,motor_recieve_yuntai3508);			
+		}
+		if(RC_Ctl.rc.s1==2)
+		{
+					CAN_cmd_current_bodan3508(0);
+					CAN_cmd_current_3508motor(0,0,0,0);
+		}		
+		//CAN_cmd_current_3508motor(5000,0,0,0);
+		
+	
+	
 		ctrl_damiao_motor(0x01,yuntai_locationtarget[1],0,10,0.3,0);
-		CAN_cmd_speed_3508motor(fashe_speed,motor_recieve_yuntai3508);
-		
-		CAN_cmd_speed_bodan(bodan_speed,motor_receive_bodan3508);
+
+/////////////////////////		
+
 		
 		HAL_Delay(2);
   }

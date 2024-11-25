@@ -13,6 +13,7 @@ extern motor_recieve motor_receive_yaw6020;
 extern damiao_recieve damiao_recieve_pitch;
 extern PID pid_dipan3508[4];
 extern  PID pid_bodan3508 ;
+extern PID pid_yaw6020_angle;
 extern PID pid_yaw6020;
 extern RC_Ctl_t RC_Ctl;
 
@@ -277,13 +278,21 @@ void CAN_cmd_current_3508motor(int16_t motor1, int16_t motor2, int16_t motor3, i
 void CAN_cmd_speed_3508motor(int16_t target[4], motor_recieve motor_recieve_info[4])
 {
 
-	int16_t motor_currnt[4];
+	int32_t motor_currnt[4];
 	
 	for (uint16_t i = 0; i < 4; i++) 
 	{
 	
     motor_currnt[i] = pid_output(&pid_dipan3508[i], motor_recieve_info[i].speed, target[i]);
+		if(motor_currnt[i]>30000)
+		{
+			motor_currnt[i]=30000;
     }
+		if(motor_currnt[i]<-30000)
+		{
+			motor_currnt[i]=-30000;
+    }
+	}
 
 	//chassis_power_control(motor_recieve_dipan3508, motor_currnt);
 		CAN_cmd_current_3508motor(motor_currnt[0],motor_currnt[1],motor_currnt[2],motor_currnt[3]);
@@ -310,9 +319,18 @@ void CAN_cmd_speed_bodan(int16_t target, motor_recieve motor_recieve_info)
 {
 
 
-		int16_t motor_currnt;
+		int32_t motor_currnt;
 
     motor_currnt = pid_output(&pid_bodan3508, motor_recieve_info.speed, target);
+			if(motor_currnt>30000)
+		{
+			motor_currnt=30000;
+    }
+		if(motor_currnt<-30000)
+		{
+			motor_currnt=-30000;
+    }
+	
     
 
 	//chassis_power_control(motor_recieve_dipan3508, motor_currnt);
@@ -366,8 +384,10 @@ void CAN_cma_angle_yaw6020(int16_t target, motor_recieve motor_recieve_info)
 		{
 			cur =cur -8192;
 		}
-		motor_speed = pid_output( &pid_yaw6020, cur, target);
-		CAN_cmd_speed_yaw6020(motor_speed,motor_recieve_info);
+		motor_speed = pid_output( &pid_yaw6020_angle, cur, target);
+		//CAN_cmd_speed_yaw6020(motor_speed,motor_recieve_info);
+		CAN_cmd_current_yaw6020(motor_speed);
+
 }
 
 

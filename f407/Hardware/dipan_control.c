@@ -5,11 +5,11 @@
 
 
 int16_t dipan_speedtarget[4];
-float yuntai_locationtarget[2]={4000-1.5};
-float yuntai_initial_location[2]={4000,-1.5};
+float yuntai_locationtarget[2]={4000,-1.5};
 
 
-int16_t dipan_x_speed,dipan_y_speed,dipan_z_speed;//底盘前后，左右，自旋速度
+
+int16_t dipan_x_speed,dipan_y_speed,yaw_speed;//底盘前后，左右，自旋速度
 int8_t power_control = 10;
 extern	float power_scale;
 
@@ -20,44 +20,40 @@ void dipan_speed_jiesuan(RC_Ctl_t RC_Ctl)
 	//
 	dipan_y_speed = RC_Ctl.rc.ch3-1024;
 	dipan_x_speed = RC_Ctl.rc.ch2-1024;
+	yaw_speed = RC_Ctl.rc.ch0-1024;
 	
-	if(RC_Ctl.rc.s2==3)
+	if(RC_Ctl.rc.s2==1)
 	{
-	dipan_z_speed = RC_Ctl.rc.ch0-1024;
-//	yuntai_locationtarget[0] = yuntai_initial_location[0];
+
 	yuntai_locationtarget[1] =0.001*(RC_Ctl.rc.ch1-1024)-1.5;
 	}
 	
-	else if(RC_Ctl.rc.s2==1)
+	if(RC_Ctl.rc.s2==3)
 	{
-	dipan_z_speed = RC_Ctl.rc.ch0-1024;
-	//yuntai_locationtarget[0] += 0.01*(RC_Ctl.rc.ch0-1024);
+	yuntai_locationtarget[0] -=0.06*(yaw_speed);
 	yuntai_locationtarget[1] =0.001*((float)(RC_Ctl.rc.ch1-1024))-1.5;	
-	}
-	
-	yuntai_locationtarget[0] -=0.02*(RC_Ctl.rc.ch0-1024);
-	
-	if(yuntai_locationtarget[0]>8190)
-	{
-		yuntai_locationtarget[0]=3;
-	}
-	if(yuntai_locationtarget[0]<2)
-	{
-		yuntai_locationtarget[0]=8190;
-	}
-
-	
-	if(yuntai_locationtarget[1]>=-1)
-	{
-		yuntai_locationtarget[1]=-1;
-	}
-	else if(yuntai_locationtarget[1]<=-2)
-	{
-		yuntai_locationtarget[1]=-2;
-	}
 	
 	
+		if(yuntai_locationtarget[0]>8190)
+		{
+			yuntai_locationtarget[0]=10;
+		}
+		if(yuntai_locationtarget[0]<5)
+		{
+			yuntai_locationtarget[0]=8190;
+		}
+		
+		
+		if(yuntai_locationtarget[1]>=-1)
+		{
+			yuntai_locationtarget[1]=-1;
+		}
+		else if(yuntai_locationtarget[1]<=-2)
+		{
+			yuntai_locationtarget[1]=-2;
+		}
 	
+  }
 
 }	
 

@@ -15,13 +15,14 @@ int16_t error_last;
 float pout ;
 int16_t iout;
 float dout;
-int16_t output;
+int32_t output;
 
 } PID;
 
 
 extern PID pid_dipan3508[4];
 extern PID pid_yaw6020;
+extern PID pid_yaw6020_angle;
 extern PID pid_bodan3508 ;
 
 int16_t pid_output(PID *pid, int16_t feedback, int16_t target) ;
